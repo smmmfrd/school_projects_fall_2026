@@ -1,11 +1,11 @@
 # Makefile
-all: hello_world
+all: base_file
 
-hello_world: hello_world.o
+base_file: base_file.o
 	gcc -g -Wl,-z,noexecstack -o $@ $+
 
-hello_world.o: hello_world.s
+base_file.o: base_file.s
 	as -g -o $@ $<
 
 clean:
-	rm -rf hello_world *.o
+	rm -rf base_file *.o
