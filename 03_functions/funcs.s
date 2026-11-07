@@ -49,6 +49,7 @@ main:	push {lr}
 	ldr r2, [r5]
 	bl printf
 
+    // Four x + Eight y
     ldr r0, [r4]
     ldr r1, [r5]
     bl four_x_plus_eight_y
@@ -57,9 +58,19 @@ main:	push {lr}
     ldr r0, =four_x_plus_eight_y_output
     bl printf
 
+    // Left Shift By Another Register's Amount
     ldr r0, [r4]
     ldr r1, [r5]
     bl x_left_shift_y
+
+    mov r1, r0
+    ldr r0, =x_left_shift_y_output
+    bl printf
+
+    // Minimum Value
+    ldr r0, [r4]
+    ldr r1, [r5]
+    bl minimum
 
     mov r1, r0
     ldr r0, =x_left_shift_y_output
@@ -75,4 +86,9 @@ four_x_plus_eight_y:
 
 x_left_shift_y:
     lsl r0, r0, r1
+    mov pc, lr
+
+minimum:
+    cmp r0, r1
+    movgt r0, r1
     mov pc, lr
