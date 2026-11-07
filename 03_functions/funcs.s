@@ -99,24 +99,24 @@ main:	push {lr}
 	pop {pc}
 
 four_x_plus_eight_y:
-    mov r0, r0, lsl#2
-    add r0, r1, lsl#3
+    mov r0, r0, lsl#2 // Store r0 shifted left 2 times (r0 = r0 * 2)
+    add r0, r1, lsl#3 // Add r1 shifted 3 times to r0 (r0 = r0 + r1 * 8)
     mov pc, lr
 
 x_left_shift_y:
-    lsl r0, r0, r1
+    lsl r0, r0, r1 // Left shift r0 by r1's amount
     mov pc, lr
 
 minimum:
-    cmp r0, r1
-    movgt r0, r1
-    cmp r0, r2
-    movgt r0, r2
+    cmp r0, r1      // Compare r0 and r1
+    movgt r0, r1    // If greater than flag is marked, then put r1 in r0 because it's smaller
+    cmp r0, r2      // Compare r0 and r2 (r0 would have r1's value if it was replaced on the previous line)
+    movgt r0, r2    // If greater than flag is marked, then put r2 in r0 because it's smaller
     mov pc, lr
 
 maximum:
-    cmp r0, r1
-    movlt r0, r1
-    cmp r0, r2
-    movlt r0, r2
+    cmp r0, r1      // Compare r0 and r1
+    movlt r0, r1    // If less than flag is marked, then put r1 in r0 because it's bigger
+    cmp r0, r2      // Compare r0 and r2 (r0 would have r1's value if it was replaced on the previous line)
+    movlt r0, r2    // If less than flag is marked, then put r2 in r0 because it's bigger
     mov pc, lr
