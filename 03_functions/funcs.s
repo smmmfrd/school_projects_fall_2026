@@ -19,6 +19,8 @@ x_left_shift_y_output: .asciz "x_left_shift_y: %d\n"
 
 minimum_output: .asciz "minimum: %d\n"
 
+maximum_output: .asciz "maximum: %d\n"
+
 .align 4
 .section .bss
 // All uninitialized data here
@@ -83,6 +85,16 @@ main:	push {lr}
     ldr r0, =minimum_output
     bl printf
 
+    // Maximum Value
+    ldr r0, [r4]
+    ldr r1, [r5]
+    ldr r2, [r6]
+    bl maximum
+
+    mov r1, r0
+    ldr r0, =maximum_output
+    bl printf
+
 	mov r0, #0 // return code for your program (must be 8 bits)
 	pop {pc}
 
@@ -100,4 +112,11 @@ minimum:
     movgt r0, r1
     cmp r0, r2
     movgt r0, r2
+    mov pc, lr
+
+maximum:
+    cmp r0, r1
+    movlt r0, r1
+    cmp r0, r2
+    movlt r0, r2
     mov pc, lr
