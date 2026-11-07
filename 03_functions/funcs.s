@@ -15,6 +15,8 @@ input_pattern: .asciz "%d %d"
 
 four_x_plus_eight_y_output: .asciz "four_x_plus_eight_y: %d\n"
 
+x_left_shift_y_output: .asciz "x_left_shift_y: %d\n"
+
 .align 4
 .section .bss
 // All uninitialized data here
@@ -55,10 +57,22 @@ main:	push {lr}
     ldr r0, =four_x_plus_eight_y_output
     bl printf
 
+    ldr r0, [r4]
+    ldr r1, [r5]
+    bl x_left_shift_y
+
+    mov r1, r0
+    ldr r0, =x_left_shift_y_output
+    bl printf
+
 	mov r0, #0 // return code for your program (must be 8 bits)
 	pop {pc}
 
 four_x_plus_eight_y:
     mov r0, r0, lsl#2
     add r0, r1, lsl#3
+    mov pc, lr
+
+x_left_shift_y:
+    lsl r0, r0, r1
     mov pc, lr
