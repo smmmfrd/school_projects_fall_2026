@@ -16,6 +16,8 @@ problem_two_true_output: .asciz "r0 (%d) found greater than r1 (%d)\n\tr4: %d\n\
 
 problem_two_false_output: .asciz "r0 (%d) found less than or equal to r1 (%d)\n\tr4: %d\n"
 
+problem_three_output: .asciz "\nPROBLEM THREE (DO WHILE LOOP)\n\tr0: %d\n\tr1: %d\n\tr2: %d\n"
+
 .align 4
 .section .bss
 // All uninitialized data here
@@ -56,6 +58,9 @@ main:
     cmp r0, r1
     blle problem_two_false
 
+    /*      PROBLEM THREE    */
+
+    bl problem_three
 
 	mov r0, #0 // return code for your program (must be 8 bits)
 	pop { r4, r5, r6, pc }
@@ -109,6 +114,7 @@ problem_two_true:
     pop { r4, r5, pc}
 
 problem_two_false:
+
     push { r4, lr}
 
     mov r4, r0
@@ -127,3 +133,28 @@ problem_two_false:
     add sp, sp, #4      // discard the stack variables
 
     pop { r4, pc}
+
+problem_three:
+    push {lr}
+
+    mov r0, #0
+    mov r1, #1
+    mov r2, #100
+do_r2_ge_0:
+    add r0, r1, lsl#2
+    add r0, r1
+
+    add r1, #2
+
+    sub r2, r2, #4
+
+    cmp r2, #0
+    bge do_r2_ge_0
+
+    mov r3, r2
+    mov r2, r1
+    mov r1, r0
+
+    ldr r0, =problem_three_output
+    bl printf
+    pop {pc}
